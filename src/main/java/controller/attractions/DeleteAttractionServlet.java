@@ -20,7 +20,7 @@ public class DeleteAttractionServlet extends HttpServlet {
 		super.init();
 		this.attractionService = new AttractionService();
 	}
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Integer id = Integer.parseInt(req.getParameter("id"));
@@ -29,6 +29,5 @@ public class DeleteAttractionServlet extends HttpServlet {
 
 		resp.sendRedirect("/turismo/attractions/index.do");
 	}
-
 
 }

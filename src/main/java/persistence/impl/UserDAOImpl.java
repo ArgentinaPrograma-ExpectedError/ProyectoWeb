@@ -33,7 +33,7 @@ public class UserDAOImpl implements UserDAO {
 
 	public int update(User user) {
 		try {
-			String sql = "UPDATE USERS SET COINS = ?, TIME = ? WHERE ID = ?";
+			String sql = "UPDATE USUARIOS SET DINERO_DISPONIBLE = ?, TIEMPO_DISPONIBLE = ? WHERE ID = ?";
 			Connection conn = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -65,7 +65,7 @@ public class UserDAOImpl implements UserDAO {
 
 	public User findByUsername(String username) {
 		try {
-			String sql = "SELECT * FROM USERS WHERE USERNAME = ?";
+			String sql = "SELECT ID, NOMBRE, PASSWORD, DINERO_DISPONIBLE, TIEMPO_DISPONIBLE, ADMIN FROM USUARIOS WHERE NOMBRE = ?";
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setString(1, username);
@@ -85,7 +85,7 @@ public class UserDAOImpl implements UserDAO {
 
 	public User find(Integer id) {
 		try {
-			String sql = "SELECT * FROM USERS WHERE ID = ?";
+			String sql = "SELECT ID, NOMBRE, PASSWORD, DINERO_DISPONIBLE, TIEMPO_DISPONIBLE, ADMIN FROM USUARIOS WHERE ID = ?";
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setInt(1, id);
@@ -139,7 +139,7 @@ public class UserDAOImpl implements UserDAO {
 
 	private User toUser(ResultSet userRegister) throws SQLException {
 		return new User(userRegister.getInt(1), userRegister.getString(2), userRegister.getString(3),
-				userRegister.getInt(5), userRegister.getDouble(6), userRegister.getBoolean(4));
+				userRegister.getInt(4), userRegister.getDouble(5), userRegister.getBoolean(6));
 	}
 
 }

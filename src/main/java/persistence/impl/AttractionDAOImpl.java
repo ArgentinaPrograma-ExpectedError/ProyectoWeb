@@ -16,7 +16,8 @@ public class AttractionDAOImpl implements AttractionDAO {
 
 	public List<Attraction> findAll() {
 		try {
-			String sql = "SELECT * FROM ATTRACTIONS";
+			String sql = "SELECT ATRACCIONES.ID, ATRACCIONES.NOMBRE, ATRACCIONES.COSTO, ATRACCIONES.DURACION, ATRACCIONES.CUPO, TIPO_ATRACCION.TIPO, ATRACCIONES.DESCRIPCION FROM ATRACCIONES\r\n"
+					+ "JOIN TIPO_ATRACCION\r\n" + "ON TIPO_ATRACCION.ID = ATRACCIONES.TIPO;";
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql);
 			ResultSet resultados = statement.executeQuery();
@@ -35,11 +36,12 @@ public class AttractionDAOImpl implements AttractionDAO {
 	@Override
 	public Attraction find(Integer id) {
 		try {
-			String sql = "SELECT * FROM ATTRACTIONS WHERE id = ?";
+			String sql = "SELECT ATRACCIONES.ID, ATRACCIONES.NOMBRE, ATRACCIONES.COSTO, ATRACCIONES.DURACION, ATRACCIONES.CUPO, TIPO_ATRACCION.TIPO, ATRACCIONES.DESCRIPCION FROM ATRACCIONES\r\n"
+					+ "JOIN TIPO_ATRACCION\r\n" + "ON TIPO_ATRACCION.ID = ATRACCIONES.TIPO WHERE ATRACCIONES.ID = ?";
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setInt(1, id);
-			
+
 			ResultSet resultados = statement.executeQuery();
 
 			Attraction attraction = null;
@@ -52,16 +54,17 @@ public class AttractionDAOImpl implements AttractionDAO {
 			throw new MissingDataException(e);
 		}
 	}
-	
+
 	private Attraction toAttraction(ResultSet attractionRegister) throws SQLException {
 		return new Attraction(attractionRegister.getInt(1), attractionRegister.getString(2),
-				attractionRegister.getInt(3), attractionRegister.getDouble(4), attractionRegister.getInt(5));
+				attractionRegister.getInt(3), attractionRegister.getDouble(4), attractionRegister.getInt(5),
+				attractionRegister.getString(6), attractionRegister.getString(7));
 	}
 
 	@Override
 	public int insert(Attraction attraction) {
 		try {
-			String sql = "INSERT INTO ATTRACTIONS (NAME, COST, DURATION, CAPACITY) VALUES (?, ?, ?, ?)";
+			String sql = "INSERT INTO ATRACCIONES (NOMBRE, COSTO, DURACION, CUPO, TIPO, DESCRIPCION) VALUES (?, ?, ?, ?, ?, ?)";
 			Connection conn = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -70,6 +73,16 @@ public class AttractionDAOImpl implements AttractionDAO {
 			statement.setInt(i++, attraction.getCost());
 			statement.setDouble(i++, attraction.getDuration());
 			statement.setInt(i++, attraction.getCapacity());
+			if (attraction.getType().equals("AVENTURA")) {
+				statement.setInt(i++, 1);
+			}
+			if (attraction.getType().equals("DEGUSTACION")) {
+				statement.setInt(i++, 2);
+			}
+			if (attraction.getType().equals("PAISAJE")) {
+				statement.setInt(i++, 3);
+			}
+			statement.setString(i++, attraction.getDescription());
 			int rows = statement.executeUpdate();
 
 			return rows;
@@ -81,7 +94,7 @@ public class AttractionDAOImpl implements AttractionDAO {
 	@Override
 	public int update(Attraction attraction) {
 		try {
-			String sql = "UPDATE ATTRACTIONS SET NAME = ?, COST = ?, DURATION = ?, CAPACITY = ? WHERE ID = ?";
+			String sql = "UPDATE ATRACCIONES SET NOMBRE = ?, COSTO = ?, DURACION = ?, CUPO = ?, TIPO = ?, DESCRIPCION = ? WHERE ID = ?";
 			Connection conn = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -90,6 +103,16 @@ public class AttractionDAOImpl implements AttractionDAO {
 			statement.setInt(i++, attraction.getCost());
 			statement.setDouble(i++, attraction.getDuration());
 			statement.setInt(i++, attraction.getCapacity());
+			if (attraction.getType().equals("AVENTURA")) {
+				statement.setInt(i++, 1);
+			}
+			if (attraction.getType().equals("DEGUSTACION")) {
+				statement.setInt(i++, 2);
+			}
+			if (attraction.getType().equals("PAISAJE")) {
+				statement.setInt(i++, 3);
+			}
+			statement.setString(i++, attraction.getDescription());
 			statement.setInt(i++, attraction.getId());
 			int rows = statement.executeUpdate();
 
@@ -102,7 +125,7 @@ public class AttractionDAOImpl implements AttractionDAO {
 	@Override
 	public int delete(Attraction attraction) {
 		try {
-			String sql = "DELETE FROM ATTRACTIONS WHERE ID = ?";
+			String sql = "DELETE FROM ATRACCIONES WHERE ID = ?";
 			Connection conn = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -131,7 +154,5 @@ public class AttractionDAOImpl implements AttractionDAO {
 			throw new MissingDataException(e);
 		}
 	}
-
-
 
 }

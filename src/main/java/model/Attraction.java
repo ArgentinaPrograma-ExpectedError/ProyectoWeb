@@ -10,23 +10,27 @@ public class Attraction {
 	private Integer cost;
 	private Double duration;
 	private Integer capacity;
-	
+	private String type;
+	private String description;
+
 	private Map<String, String> errors;
-	
-	public Attraction(Integer id, String name, Integer cost, Double duration, Integer capacity) {
+
+	public Attraction(Integer id, String name, Integer cost, Double duration, Integer capacity, String type, String description) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.cost = cost;
 		this.duration = duration;
 		this.capacity = capacity;
+		this.type = type;
+		this.description = description;
 	}
-	
+
 	public boolean isValid() {
 		validate();
 		return errors.isEmpty();
 	}
-	
+
 	public void validate() {
 		errors = new HashMap<String, String>();
 
@@ -39,8 +43,11 @@ public class Attraction {
 		if (capacity <= 0) {
 			errors.put("capacity", "Debe ser positivo");
 		}
+		if (!type.equals("AVENTURA") && !type.equals("DEGUSTACION") && !type.equals("PAISAJE")) {
+			errors.put("type", "Debe ser un tipo válido");
+		}
 	}
-	
+
 	public Map<String, String> getErrors() {
 		return errors;
 	}
@@ -85,6 +92,22 @@ public class Attraction {
 		this.capacity = capacity;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	@Override
 	public String toString() {
 		return "Attraction [id=" + id + ", name=" + name + ", cost=" + cost + ", duration=" + duration + ", capacity="
@@ -99,6 +122,4 @@ public class Attraction {
 		this.capacity -= i;
 	}
 
-	
-	
 }

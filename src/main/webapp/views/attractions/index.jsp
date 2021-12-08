@@ -41,9 +41,9 @@
 		<table class="table table-stripped table-hover">
 			<thead>
 				<tr>
-					<th>Atracci&oacute;n</th>
+					<th>Atracción</th>
 					<th>Costo</th>
-					<th>Duraci&oacute;n</th>
+					<th>Duración</th>
 					<th>Cupo</th>
 					<th>Acciones</th>
 				</tr>
@@ -52,9 +52,9 @@
 				<c:forEach items="${attractions}" var="attraction">
 					<tr>
 						<td><strong><c:out value="${attraction.name}"></c:out></strong>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-								Cras pretium eros urna. Sed quis erat congue, bibendum tortor
-								malesuada, iaculis diam. Ut ut imperdiet sapien.</p></td>
+							<p>
+								<c:out value="${attraction.description}"></c:out>
+							</p></td>
 						<td><c:out value="${attraction.cost}"></c:out></td>
 						<td><c:out value="${attraction.duration}"></c:out></td>
 						<td><c:out value="${attraction.capacity}"></c:out></td>

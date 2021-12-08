@@ -2,8 +2,8 @@
 <div class="modal-body">
 	<div class="mb-3">
 		<label for="name" class="col-form-label">Nombre:</label> <input
-			type="text" class="form-control" id="name" name="name"
-			required value="${attraction.name}">
+			type="text" class="form-control" id="name" name="name" required
+			value="${attraction.name}">
 	</div>
 	<div class="mb-3">
 		<label for="cost"
@@ -17,8 +17,8 @@
 	<div class="mb-3">
 		<label for="duration"
 			class='col-form-label ${attraction.errors.get("duration") != null ? "is-invalid" : "" }'>Duration:</label>
-		<input class="form-control" type="number" id="duration" name="duration"
-			required value="${attraction.duration}"></input>
+		<input class="form-control" type="number" id="duration"
+			name="duration" required value="${attraction.duration}"></input>
 		<div class="invalid-feedback">
 			<c:out value='${attraction.errors.get("duration")}'></c:out>
 		</div>
@@ -26,11 +26,25 @@
 	<div class="mb-3">
 		<label for="capacity"
 			class='col-form-label ${attraction.errors.get("capacity") != null ? "is-invalid" : "" }'>Capacity:</label>
-		<input class="form-control" type="number" id="capacity" name="capacity"
-			required value="${attraction.capacity}"></input>
+		<input class="form-control" type="number" id="capacity"
+			name="capacity" required value="${attraction.capacity}"></input>
 		<div class="invalid-feedback">
 			<c:out value='${attraction.errors.get("capacity")}'></c:out>
 		</div>
+	</div>
+	<div class="mb-3">
+		<label for="type"
+			class='col-form-label ${attraction.errors.get("type") != null ? "is-invalid" : "" }'>Tipo:</label>
+		<input class="form-control" type="text" id="type" name="type" required
+			value="${attraction.type}"></input>
+		<div class="invalid-feedback">
+			<c:out value='${attraction.errors.get("type")}'></c:out>
+		</div>
+	</div>
+	<div class="mb-3">
+		<label for="description" class="col-form-label">Descripción:</label> <input
+			type="text" class="form-control" id="description" name="description"
+			required value="${attraction.description}">
 	</div>
 </div>
 <div>
