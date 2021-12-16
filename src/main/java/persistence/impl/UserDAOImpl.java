@@ -5,14 +5,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import model.Attraction;
+import model.Promotion;
+import model.Suggestion;
 import model.User;
 import model.nullobjects.NullUser;
+import persistence.AttractionDAO;
 import persistence.UserDAO;
 import persistence.commons.ConnectionProvider;
+import persistence.commons.DAOFactory;
 import persistence.commons.MissingDataException;
 
 public class UserDAOImpl implements UserDAO {
@@ -174,22 +179,60 @@ public class UserDAOImpl implements UserDAO {
 		}
 	}
 
-	public int agregarAItinerario(User user, Attraction attraction) {
-		try {
-			String sql = "INSERT INTO itinerarios (id_usuario, id_atraccion) VALUES (?, ?)";
-			Connection conn = ConnectionProvider.getConnection();
-			PreparedStatement statement = conn.prepareStatement(sql);
+	public void agregarAItinerario(User user, Suggestion suggestion) {
+		if (suggestion instanceof Attraction) {
+			try {
+				String sql = "INSERT INTO itinerarios (id_usuario, id_atraccion) VALUES (?, ?)";
+				Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement statement = conn.prepareStatement(sql);
 
-			statement.setInt(1, user.getId());
-			statement.setInt(2, attraction.getId());
+				statement.setInt(1, user.getId());
+				statement.setInt(2, suggestion.getId());
 
-			int rows = statement.executeUpdate();
+				statement.executeUpdate();
 
-			return rows;
-		} catch (Exception e) {
-			throw new MissingDataException(e);
+			} catch (Exception e) {
+				throw new MissingDataException(e);
+			}
 		}
+		if (suggestion instanceof Promotion) {
+			try {
+				String sql = "INSERT INTO itinerarios (id_usuario, id_atraccion) VALUES (?, ?)";
+				Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement statement = conn.prepareStatement(sql);
+
+				for (Attraction a : suggestion.getAttractions()) {
+
+					statement.setInt(1, user.getId());
+					statement.setInt(2, a.getId());
+					statement.executeUpdate();
+
+				}
+
+			} catch (Exception e) {
+				throw new MissingDataException(e);
+			}
+		}
+
 	}
+
+	public List<Attraction> cargarAtraccionesItinerario(User u) {
+		AttractionDAO attractionDAO = DAOFactory.getAttractionDAO();
+		List<Attraction> array = new LinkedList<Attraction>();
+		List<Attraction> todas = attractionDAO.findAll();
+		List<String> atracciones = cargarAtraccionesCompradas(u);
+
+		for (String string : atracciones) {
+			for (Attraction a : todas) {
+				if (string.equals(a.getName())) {
+					array.add(attractionDAO.find(a.getId()));
+				}
+
+			}
+		}
+		return array;
+	}
+
 	public List<String> cargarAtraccionesCompradas(User u) {
 		try {
 			String sql = "SELECT atracciones.nombre FROM atracciones JOIN itinerarios on itinerarios.id_atraccion=atracciones.id JOIN usuarios on itinerarios.id_usuario=usuarios.id WHERE usuarios.id = ?";
@@ -209,7 +252,6 @@ public class UserDAOImpl implements UserDAO {
 		}
 	}
 
-	
 	private User toUser(ResultSet userRegister) throws SQLException {
 		return new User(userRegister.getInt(1), userRegister.getString(2), userRegister.getString(3),
 				userRegister.getInt(4), userRegister.getDouble(5), userRegister.getString(6),

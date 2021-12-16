@@ -195,4 +195,9 @@ public class AttractionDAOImpl implements AttractionDAO {
 	private AttractionType toAttractionType(ResultSet resultados) throws SQLException {
 		return new AttractionType(resultados.getInt(1), resultados.getString(2));
 	}
+
+	@Override
+	public List<Attraction> findAttractions(Integer id) {
+		return null;
+	}
 }

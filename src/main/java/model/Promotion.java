@@ -160,5 +160,11 @@ public abstract class Promotion implements Suggestion, Comparable<Promotion> {
 		this.description = description2;
 		
 	}
-
+	
+	public void host(int i) {
+		for (Attraction attraction : attractions) {
+			attraction.host(i);
+		}
+	}
+	
 }

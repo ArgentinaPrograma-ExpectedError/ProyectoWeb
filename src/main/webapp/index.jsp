@@ -30,11 +30,8 @@
 				<c:forEach items="${attractions}" var="atraction">
 
 					<li>
-					
-						<article>
-						
+			 			<article>
 							<tr>
-							
 								<td><c:out value="${atraction.getId()}"></c:out></td>
 								<td><c:out value="${atraction.getName()}"></c:out></td>
 								<td><c:out value="${atraction.description}"></c:out></td>
@@ -42,11 +39,9 @@
 								<td><c:out value="${atraction.getDuration()}"></c:out></td>
 								<td><c:out value="${atraction.getCapacity()}"></c:out></td>
 								<td><c:out value="${atraction.getAttractionType()}"></c:out></td>
-
 							</tr>
 						</article>
 					</li>
-
 				</c:forEach>
 				</ul>
 	</main>
@@ -72,16 +67,7 @@
 
 				</div>
 			</div>
-
-
-
-
-
-
-
-			<!-- ----------- iconos----------------  -->
-
-
+		<!-- ----------- iconos----------------  -->
 
 			<div>
 				<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
@@ -148,10 +134,7 @@
 			</div>
 
 		</div>
-
-
 		<!-- ----------- integrantes del grupo----------------  -->
-
 		<div class="container">
 
 			<div class="nav-item dropdown">

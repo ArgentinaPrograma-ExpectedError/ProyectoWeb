@@ -29,28 +29,42 @@ public class User {
 		this.admin = admin;
 	}
 
-	public void addToItinerary(Attraction attraction) {
-		this.coins -= attraction.getCost();
-		this.time -= attraction.getDuration();
+	public void addToItinerary(Suggestion suggestion) {
+		this.coins -= suggestion.getCost();
+		this.time -= suggestion.getDuration();
 	}
 
-	public boolean canAfford(Integer coin) {
-		return coin <= this.coins;
+	public boolean canAfford(Suggestion suggestion) {
+		return suggestion.getCost() <= this.coins;
 	}
 
-	public boolean canAttend(Double timeParam) {
-		return timeParam <= this.time;
+	public boolean canAttend(Suggestion suggestion) {
+		return suggestion.getDuration() <= this.time;
 	}
 
 	public boolean canBuy(Integer id) {
 		UserDAO userDAO = DAOFactory.getUserDAO();
-		Attraction attraction=DAOFactory.getAttractionDAO().find(id);
+		Attraction attraction = DAOFactory.getAttractionDAO().find(id);
 		List<String> compradas = userDAO.cargarAtraccionesCompradas(this);
 		if (compradas.contains(attraction.getName())) {
 			return false;
 		}
 		return true;
 
+	}
+
+	public boolean canBuyPromotion(Integer id) {
+		UserDAO userDAO = DAOFactory.getUserDAO();
+		List<Attraction> attractions = DAOFactory.getPromotionDAO().find(id).getAttractions();
+		List<String> compradas = userDAO.cargarAtraccionesCompradas(this);
+		for (Attraction a : attractions) {
+			for (String s : compradas) {
+				if (s.equals(a.getName())) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	public boolean checkPassword(String password) {

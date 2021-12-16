@@ -39,7 +39,7 @@
 				<c:if test="${!user.isAdmin()}">
 					<ul class="navbar-nav me-auto mb-2 mb-md-0">
 						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href=""> <i class="bi bi-journal-text"></i>
+							aria-current="page" href="/turismo/itinerario/index.do"> <i class="bi bi-journal-text"></i>
 								Mi Itinerario
 						</a></li>
 					</ul>

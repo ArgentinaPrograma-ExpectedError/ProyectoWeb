@@ -76,7 +76,7 @@
 						</tr>
 					</c:if>
 					<c:if
-						test="${!user.isAdmin() && atraction.enable && user.canAfford(atraction.getCost()) && user.canAttend(atraction.getDuration()) && atraction.canHost(1) && user.canBuy(atraction.getId())}">
+						test="${!user.isAdmin() && atraction.enable && user.canAfford(atraction) && user.canAttend(atraction) && atraction.canHost(1) && user.canBuy(atraction.getId())}">
 						<tr>
 						<td><c:out value="${atraction.getId()}"></c:out></td>
 							<td><c:out value="${atraction.name}"></c:out>

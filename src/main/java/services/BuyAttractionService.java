@@ -23,10 +23,10 @@ public class BuyAttractionService {
 		if (!attraction.canHost(1)) {
 			errors.put("attraction", "No hay cupo disponible");
 		}
-		if (!user.canAfford(attraction.getCost())) {
+		if (!user.canAfford(attraction)) {
 			errors.put("user", "No tienes dinero suficiente");
 		}
-		if (!user.canAttend(attraction.getDuration())) {
+		if (!user.canAttend(attraction)) {
 			errors.put("user", "No tienes tiempo suficiente");
 		}
 

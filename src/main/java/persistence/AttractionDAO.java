@@ -10,4 +10,6 @@ public interface AttractionDAO extends GenericDAO<Attraction> {
 
 	public List<AttractionType> findAttractionTypes();
 
+	public List<Attraction> findAttractions(Integer id);
+
 }

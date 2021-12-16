@@ -84,7 +84,7 @@
 						</tr>
 					</c:if>
 					<c:if
-						test="${!user.isAdmin() && promotion.enable && user.canAfford(promotion.getNetCost()) && user.canAttend(promotion.getDuration()) && promotion.canHost(1)}">
+						test="${!user.isAdmin() && promotion.enable && user.canAfford(promotion) && user.canAttend(promotion) && promotion.canHost(1) && user.canBuyPromotion(promotion.getId())}">
 						<tr>
                          	<td><strong><c:out value="${promotion.name}"></c:out></strong>
 								<p>
