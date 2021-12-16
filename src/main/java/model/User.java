@@ -1,5 +1,11 @@
 package model;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import persistence.UserDAO;
+import persistence.commons.DAOFactory;
 import utils.Crypt;
 
 public class User {
@@ -9,38 +15,47 @@ public class User {
 	private Boolean admin;
 	private Integer coins;
 	private Double time;
+	private String type;
+	private Map<String, String> errors;
 
-	public User(Integer id, String username, String password, Integer coins, Double time, Boolean admin) {
+	public User(Integer id, String username, String type, Integer coins, Double time, String password, Boolean admin) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.coins = coins;
 		this.time = time;
+		this.type = type;
 		this.admin = admin;
 	}
 
 	public void addToItinerary(Attraction attraction) {
 		this.coins -= attraction.getCost();
 		this.time -= attraction.getDuration();
-		// TODO agregar a su lista
 	}
 
-	public boolean canAfford(Attraction attraction) {
-		return attraction.getCost() <= this.coins;
+	public boolean canAfford(Integer coin) {
+		return coin <= this.coins;
 	}
 
-	public boolean canAttend(Attraction attraction) {
-		return attraction.getDuration() <= this.time;
+	public boolean canAttend(Double timeParam) {
+		return timeParam <= this.time;
+	}
+
+	public boolean canBuy(Integer id) {
+		UserDAO userDAO = DAOFactory.getUserDAO();
+		Attraction attraction=DAOFactory.getAttractionDAO().find(id);
+		List<String> compradas = userDAO.cargarAtraccionesCompradas(this);
+		if (compradas.contains(attraction.getName())) {
+			return false;
+		}
+		return true;
+
 	}
 
 	public boolean checkPassword(String password) {
 		// this.password en realidad es el hash del password
 		return Crypt.match(password, this.password);
-	}
-
-	public Boolean getAdmin() {
-		return admin;
 	}
 
 	public Integer getCoins() {
@@ -49,6 +64,14 @@ public class User {
 
 	public Integer getId() {
 		return id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getPassword() {
@@ -63,12 +86,12 @@ public class User {
 		return username;
 	}
 
-	public Boolean isAdmin() {
-		return admin;
-	}
-
 	public boolean isNull() {
 		return false;
+	}
+
+	public Boolean isAdmin() {
+		return admin;
 	}
 
 	public void setAdmin(Boolean admin) {
@@ -97,7 +120,32 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", admin=" + admin + "]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", admin=" + admin + ", coins="
+				+ coins + ", time=" + time + ", type=" + type + ", errors=" + errors + "]";
+	}
+
+	public boolean isValid() {
+		validate();
+		return errors.isEmpty();
+	}
+
+	public void validate() {
+		errors = new HashMap<String, String>();
+
+		if (coins <= 0) {
+			errors.put("coins", "Debe ser positivo");
+		}
+		if (time <= 0) {
+			errors.put("time", "Debe ser positivo");
+		}
+		if (!type.equals("AVENTURA") && !type.equals("DEGUSTACION") && !type.equals("PAISAJE")) {
+			errors.put("type", "Debe ser un tipo válido");
+		}
+
+	}
+
+	public Map<String, String> getErrors() {
+		return errors;
 	}
 
 }

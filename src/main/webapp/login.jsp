@@ -4,42 +4,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-<jsp:include page="partials/head.jsp"></jsp:include>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+	href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap"
+	rel="stylesheet" />
+<link href="assets/stylesheets/login.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap" rel="stylesheet">
 </head>
 <body>
+<main>
+<video src="assets/video/fondo.mp4" loop="true" autoplay="autoplay" controls muted ></video>
+		
+		<c:if test="${flash != null}">
+			<div class="alert alert-danger">
+				<p class="alerta">
+					<c:out value="${flash}" />
+				</p>
+			</div>
+		</c:if>
 
-	<div class="col-lg-5 mx-auto p-3 py-md-5">
 
-		<main>
-			<h1>Turismo en la Tierra Media</h1>
+  <div class="body"></div>
+  <div class="grad"></div>
+  <div class="header">
+    <div class="titulo">Tierra <span>Media</span></div>
+  </div>
+  <br>
+<div class="login" >
+	<form action="login"  method="post">
 
-
-			<c:if test="${flash != null}">
-				<div class="alert alert-danger">
-					<p>
-						<c:out value="${flash}" />
-					</p>
-				</div>
-			</c:if>
-
-			<form action="login" method="post">
-
-				<div class="mb-3">
-					<label for="username" class="form-label">Usuario</label> <input
-						class="form-control" name="username">
-				</div>
-
-				<div class="mb-3">
-					<label for="password" class="form-label">Contraseña</label> <input
-						type="password" class="form-control" name="password">
-				</div>
-
-				<div class="d-grid gap-2">
-					<button type="submit" class="btn btn-lg btn-primary">Ingresar</button>
-				</div>
-			</form>
-
-		</main>
+  
+  
+    <input type="text" placeholder="username" name="userAdmin" ><br>
+    <input type="password" placeholder="password" name="passwordAdmin"><br>
+    <button type="submit" class="btn btn-lg btn-primary">Ingresar</button>
+				
+  		</form>
+		<br> <br>
+		<p id=marca>WebApp by @ExpectedError</p>
+	
 	</div>
+	</main>
 </body>
 </html>

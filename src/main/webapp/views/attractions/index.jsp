@@ -4,86 +4,100 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="../assets/stylesheets/panel.css" />
+
+
 <jsp:include page="/partials/head.jsp"></jsp:include>
 </head>
 <body>
 
 	<jsp:include page="/partials/nav.jsp"></jsp:include>
 
+
+	<header class="container">
+
+		<h1>Atracciones</h1>
+
+	</header>
+
+	<!-- <-- atracciones  -->
 	<main class="container">
-
-		<c:if test="${flash != null}">
-			<div class="alert alert-danger">
-				<p>
-					<c:out value="${flash}" />
-					<c:if test="${errors != null}">
-						<ul>
-							<c:forEach items="${errors}" var="entry">
-								<li><c:out value="${entry.getValue()}"></c:out></li>
-							</c:forEach>
-						</ul>
-					</c:if>
-				</p>
-			</div>
-		</c:if>
-
-		<div class="bg-light p-4 mb-3 rounded">
-			<h1>Estas son las atracciones de la Tierra Media</h1>
-		</div>
 
 		<c:if test="${user.isAdmin()}">
 			<div class="mb-3">
-				<a href="/turismo/attractions/create.do" class="btn btn-primary"
+				<a href="/turismo/attraction/create.do" class="btn btn-danger"
 					role="button"> <i class="bi bi-plus-lg"></i> Nueva Atracción
 				</a>
 			</div>
 		</c:if>
-		<table class="table table-stripped table-hover">
+
+		<table class="container table table-dark table-striped">
 			<thead>
 				<tr>
+					<th>Id</th>
 					<th>Atracción</th>
+					<th>Descripción</th>
 					<th>Costo</th>
-					<th>Duración</th>
-					<th>Cupo</th>
+					<th>Tiempo</th>
+					<th>Cupo Diario</th>
+					<th>Tipo de Atracción</th>
 					<th>Acciones</th>
+
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${attractions}" var="attraction">
-					<tr>
-						<td><strong><c:out value="${attraction.name}"></c:out></strong>
-							<p>
-								<c:out value="${attraction.description}"></c:out>
-							</p></td>
-						<td><c:out value="${attraction.cost}"></c:out></td>
-						<td><c:out value="${attraction.duration}"></c:out></td>
-						<td><c:out value="${attraction.capacity}"></c:out></td>
 
-						<td><c:if test="${user.admin}">
-								<a href="/turismo/attractions/edit.do?id=${attraction.id}"
-									class="btn btn-light rounded-0" role="button"><i
-									class="bi bi-pencil-fill"></i></a>
-								<a href="/turismo/attractions/delete.do?id=${attraction.id}"
-									class="btn btn-danger rounded" role="button"><i
-									class="bi bi-x-circle-fill"></i></a>
-							</c:if> <c:choose>
+				<c:forEach items="${attractions}" var="atraction">
+					<c:if test="${user.isAdmin()}">
+						<tr>
+							<td><c:out value="${atraction.getId()}"></c:out></td>
+							<td><c:out value="${atraction.getName()}"></c:out></td>
+							<td><c:out value="${atraction.description}"></c:out></td>
+							<td><c:out value="${atraction.getCost()}"></c:out></td>
+							<td><c:out value="${atraction.getDuration()}"></c:out></td>
+							<td><c:out value="${atraction.getCapacity()}"></c:out></td>
+							<td><c:out value="${atraction.getAttractionType()}"></c:out></td>
 
-								<c:when
-									test="${user.canAfford(attraction) && user.canAttend(attraction) && attraction.canHost(1)}">
-									<a href="/turismo/attractions/buy.do?id=${attraction.id}"
-										class="btn btn-success rounded" role="button">Comprar</a>
-								</c:when>
-								<c:otherwise>
-									<a href="#" class="btn btn-secondary rounded disabled"
-										role="button">No se puede comprar</a>
-								</c:otherwise>
-							</c:choose></td>
-					</tr>
+							<td><a href="/turismo/atractions/edit.do?id=${atraction.id}"
+								class="btn btn-light rounded-0" role="button"><i
+									class="bi bi-pencil-square"></i></a> <a
+								href="/turismo/atractions/delete.do?id=${atraction.id}"
+								class="btn btn-danger" role="button"><i class="bi bi-trash"></i></a>
+								<c:choose>
+									<c:when test="${atraction.enable}">
+										<a href="/turismo/atractions/enable.do?id=${atraction.id}"
+											class="btn btn-outline-secondary" role="button">Deshabilitar</a>
+									</c:when>
+									<c:otherwise>
+										<a href="/turismo/atractions/enable.do?id=${atraction.id}"
+											class="btn btn-secondary" role="button">Habilitar</a>
+									</c:otherwise>
+								</c:choose></td>
+						</tr>
+					</c:if>
+					<c:if
+						test="${!user.isAdmin() && atraction.enable && user.canAfford(atraction.getCost()) && user.canAttend(atraction.getDuration()) && atraction.canHost(1) && user.canBuy(atraction.getId())}">
+						<tr>
+						<td><c:out value="${atraction.getId()}"></c:out></td>
+							<td><c:out value="${atraction.name}"></c:out>
+								</td>
+							<td><c:out value="${atraction.description}"></c:out></td>
+							<td><c:out value="${atraction.getCost()}"></c:out></td>
+							<td><c:out value="${atraction.getDuration()}"></c:out></td>
+	                        <td><c:out value="${atraction.getCapacity()}"></c:out></td>
+							<td><c:out value="${atraction.getAttractionType()}"></c:out></td>
+							<td><a href="/turismo/attractions/buy.do?id=${atraction.id}"
+								class="btn btn-success rounded" role="button">Comprar</a></td>
+						</tr>
+					</c:if>
 				</c:forEach>
 			</tbody>
 		</table>
 
 	</main>
-
+	<br>
+	<br>
+	<br>
+	<footer class="container">By @ExpectedError </footer>
 </body>
 </html>

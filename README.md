@@ -15,4 +15,4 @@ Puede utilizarse como base, o como referencia para continuar el desarrollo.
 1. El archivo de la base de datos NO debería estar en el proyecto. Sin embargo, se adjunta para tener uno de referencia.
 2. Las contraseñas deberían guardarse con un cifrado de una sola dirección.
 3. Debería guardarse el itinerario.
-4. Podría integrarse una API para obtener información sobre el clima o las atracciones.
+4. Podría integrarse una API para obtener información sobre el clima o las atracciones.# ProyectoWeb

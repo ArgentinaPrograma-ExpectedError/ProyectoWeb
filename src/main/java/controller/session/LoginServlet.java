@@ -24,8 +24,8 @@ public class LoginServlet extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String username = req.getParameter("username");
-		String password = req.getParameter("password");
+		String username = req.getParameter("userAdmin");
+		String password = req.getParameter("passwordAdmin");
 
 		User user = loginService.login(username, password);
 

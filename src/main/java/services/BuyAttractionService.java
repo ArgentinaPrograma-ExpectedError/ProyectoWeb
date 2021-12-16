@@ -23,20 +23,22 @@ public class BuyAttractionService {
 		if (!attraction.canHost(1)) {
 			errors.put("attraction", "No hay cupo disponible");
 		}
-		if (!user.canAfford(attraction)) {
+		if (!user.canAfford(attraction.getCost())) {
 			errors.put("user", "No tienes dinero suficiente");
 		}
-		if (!user.canAttend(attraction)) {
+		if (!user.canAttend(attraction.getDuration())) {
 			errors.put("user", "No tienes tiempo suficiente");
 		}
 
 		if (errors.isEmpty()) {
 			user.addToItinerary(attraction);
-			attraction.host(1);
-
-			// no grabamos para no afectar la base de pruebas
+		    
+			userDAO.agregarAItinerario(user,attraction);	
+		    userDAO.update(user);
+		    
+		    attraction.host(1);
 			attractionDAO.update(attraction);
-			userDAO.update(user);
+			
 		}
 
 		return errors;
