@@ -18,7 +18,12 @@ public class PercentagePromotion extends Promotion {
 	}
 
 	public int getDiscount() {
-		return discount;
+		try {
+			return discount;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return 0;
 	}
 
 	private boolean descuentoCorrecto(double valor) {

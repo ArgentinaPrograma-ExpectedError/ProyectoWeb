@@ -39,7 +39,7 @@
 					role="button"> <i class="bi bi-plus-lg"></i> Nueva Promoción
 				</a>
 			</div>
-		</c:if>
+		
 		<table class="class= container table table-dark table-striped">
 			<thead>
 				<tr>
@@ -51,7 +51,7 @@
 					<th>Duración</th>
 					<th>Acciones</th>
 				</tr>
-			</thead>
+			</thead></c:if>
 			<tbody>
 				<c:forEach items="${promotions}" var="promotion">
 					<c:if test="${user.isAdmin()}">
@@ -83,10 +83,10 @@
 								</c:choose></td>
 						</tr>
 					</c:if>
-					<c:if
+					<%-- <c:if
 						test="${!user.isAdmin() && promotion.enable && user.canAfford(promotion) && user.canAttend(promotion) && promotion.canHost(1) && user.canBuyPromotion(promotion.getId())}">
 						<tr>
-                         	<td><strong><c:out value="${promotion.name}"></c:out></strong>
+							<td><strong><c:out value="${promotion.name}"></c:out></strong>
 								<p>
 									<c:out value="${promotion.description}"></c:out>
 								</p></td>
@@ -98,11 +98,68 @@
 							<td><a href="/turismo/promotions/buy.do?id=${promotion.id}"
 								class="btn btn-success rounded" role="button">Comprar</a></td>
 						</tr>
-					</c:if>
+					</c:if> --%>
 				</c:forEach>
 			</tbody>
 		</table>
+
+
+		<c:if test="${!user.isAdmin()}">
+
+			<section class="container column object-fit">
+				<div class="row row-cols-1 row-cols-md-3 g-3">
+					<c:forEach items="${promotions}" var="promotion">
+						<div class="col">
+							<div class="card w-60"
+								style="height: 600px; width: 400px; border: 5px solid black; background-color: #D1D1D1">
+
+								<div class="card-body">
+
+									<img src="${promotion.getUrl()}" class="card-img-top"
+										style="height: 280px; width: 360px;">
+									<h5 class="card-title">
+										<c:out value="${promotion.name}"></c:out>
+									</h5>
+									<p class="card-text">
+										<c:out value="${promotion.description}"></c:out>
+									</p>
+									<p class="card-text">
+										Atracciones incluidas: <c:out value="${promotion.getNameAttractions()}"></c:out>
+									</p>
+
+									<p>
+										<strong>Precio: </strong>
+										<c:out value="${promotion.getCost()}"></c:out>
+									</p>
+									<p>
+									<strong>	Duracion: </strong>
+										<c:out value="${promotion.getDuration()}"></c:out>
+									</p>
+									<c:if
+										test="${!user.isAdmin() && promotion.enable && user.canAfford(promotion) && user.canAttend(promotion) && promotion.canHost(1) && user.canBuyPromotion(promotion.getId())}">
+
+										<a href="/turismo/promotions/buy.do?id=${promotion.id}"
+											class="btn btn-dark rounded" role="button">Comprar</a>
+
+									</c:if>
+									<c:if test="${!user.isAdmin() && (!promotion.enable || !user.canAfford(promotion) || !user.canAttend(promotion) || !promotion.canHost(1) || !user.canBuyPromotion(promotion.getId()))}">
+									
+											<button class="btn btn-secondary disabled" role="button">No disponible</button> 
+										
+									</c:if>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+
+				</div>
+			</section>
+
+		</c:if>
+
+
+
 	</main>
-<footer class="container">By @ExpectedError </footer>
+	<footer class="container">By @ExpectedError </footer>
 </body>
 </html>

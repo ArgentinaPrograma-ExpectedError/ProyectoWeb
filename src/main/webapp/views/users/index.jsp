@@ -39,7 +39,7 @@
 				</a>
 			</div>
 		</c:if>
-		<table class="class= container table table-dark table-striped"">
+		<table class="class= container table table-dark table-striped">
 			<thead>
 				<tr>
 					<th>Nombre</th>

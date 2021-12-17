@@ -6,19 +6,25 @@
 <link rel="stylesheet" href="assets/stylesheets/index.css">
 </head>
 <body class="container">
+
+<c:if test="${!user.isAdmin()}">
 	<jsp:include page="partials/nav.jsp"></jsp:include>
 
 	<header class="container">
 		<h1 id=brand>PARQUE TIERRA MEDIA</h1>
 	</header>
 
+
 	<div class="p-4 rounded container">
 		<br>
-		<p style="font-size: 20px;">El Parque Tierra Media tiene mil
-			Aventuras para ofrecerte, cientos de Paisajes para recorrer y muchos
+		<p style="font-size: 20px;">
+		
+		Los personajes medievales, tanto clérigos como seglares, se valieron de la literatura como medio para alcanzar un fin más trascendente: mostrar al hombre cómo había de orientar su vida de acuerdo con la edad media para obtener la supervivencia.
+		<br>
+		El Parque Tierra Media tiene mil Aventuras para ofrecerte, cientos de Paisajes para recorrer y muchos
 			sabores para descubrir en Degustaciones</p>
 		<br>
-		<h2>Elije cómo revivir la Edad Media!!!</h2>
+		<h2 style="text-align: center;"> Elije cómo revivir la Edad Media <i class="bi bi-bug-fill"></i></h2>
 	</div>
 	<br>
 	<br>
@@ -32,7 +38,7 @@
 
 				<li>
 					<article>
-						<a href=""><img src="${suggestion.getUrl()}"></a>
+						<img src="${suggestion.getUrl()}">
 						<h3>
 							<c:out value="${suggestion.getName()}"></c:out>
 						</h3>
@@ -54,7 +60,7 @@
 				<!-- ----------- datos----------------  -->
 				<div class="colum1">
 					<h5>
-						Parque Temático: <br> Tierra Media
+						Parque Temático <br> Tierra Media
 					</h5>
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 						fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
@@ -161,6 +167,18 @@
 
 
 	</footer>
+	
+	</c:if>
+	<c:if test="${user.isAdmin()}">
+
+	<header class="container">
+		<h1 id=brand style="margin-top: 40px; margin-bottom: 80px;">PARQUE TIERRA MEDIA</h1>
+	</header>
+	<jsp:include page="partials/nav.jsp"></jsp:include>
+
+
+	</c:if>
+	
 </body>
 </html>
 

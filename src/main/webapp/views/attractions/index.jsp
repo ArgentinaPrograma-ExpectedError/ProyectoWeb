@@ -29,8 +29,7 @@
 					role="button"> <i class="bi bi-plus-lg"></i> Nueva Atracción
 				</a>
 			</div>
-		</c:if>
-
+		
 		<table class="container table table-dark table-striped">
 			<thead>
 				<tr>
@@ -45,6 +44,8 @@
 
 				</tr>
 			</thead>
+		</c:if>
+		
 			<tbody>
 
 				<c:forEach items="${attractions}" var="atraction">
@@ -58,7 +59,8 @@
 							<td><c:out value="${atraction.getCapacity()}"></c:out></td>
 							<td><c:out value="${atraction.getAttractionType()}"></c:out></td>
 
-							<td><a href="/turismo/attractions/edit.do?id=${atraction.id}"
+							<td><a
+								href="/turismo/attractions/edit.do?id=${atraction.id}"
 								class="btn btn-light rounded-0" role="button"><i
 									class="bi bi-pencil-square"></i></a> <a
 								href="/turismo/attractions/delete.do?id=${atraction.id}"
@@ -75,25 +77,72 @@
 								</c:choose></td>
 						</tr>
 					</c:if>
-					<c:if
+					<%-- 	<c:if
 						test="${!user.isAdmin() && atraction.enable && user.canAfford(atraction) && user.canAttend(atraction) && atraction.canHost(1) && user.canBuy(atraction.getId())}">
 						<tr>
-						<td><c:out value="${atraction.getId()}"></c:out></td>
-							<td><c:out value="${atraction.name}"></c:out>
-								</td>
+							<td><c:out value="${atraction.getId()}"></c:out></td>
+							<td><c:out value="${atraction.name}"></c:out></td>
 							<td><c:out value="${atraction.description}"></c:out></td>
 							<td><c:out value="${atraction.getCost()}"></c:out></td>
 							<td><c:out value="${atraction.getDuration()}"></c:out></td>
-	                        <td><c:out value="${atraction.getCapacity()}"></c:out></td>
+							<td><c:out value="${atraction.getCapacity()}"></c:out></td>
 							<td><c:out value="${atraction.getAttractionType()}"></c:out></td>
 							<td><a href="/turismo/attractions/buy.do?id=${atraction.id}"
 								class="btn btn-success rounded" role="button">Comprar</a></td>
 						</tr>
-					</c:if>
+					</c:if> --%>
 				</c:forEach>
 			</tbody>
 		</table>
 
+
+		<c:if test="${!user.isAdmin()}">
+
+			<section class="container column object-fit">
+				<div class="row row-cols-1 row-cols-md-3 g-3">
+					<c:forEach items="${attractions}" var="atraction">
+						<div class="col">
+							<div class="card w-60"
+								style="height: 660px; width: 400px; border: 5px solid black; background-color: #D1D1D1">
+
+								<div class="card-body">
+
+									<img src="${atraction.getUrl()}" class="card-img-top"
+										style="height: 380px; width: 360px;">
+									<h5 class="card-title">
+										<c:out value="${atraction.name}"></c:out>
+									</h5>
+									<p class="card-text">
+										<c:out value="${atraction.description}"></c:out>
+									</p>
+									<p>
+										<strong>Precio:</strong>
+										<c:out value="${atraction.getCost()}"></c:out>
+									</p>
+									<p>
+									<strong>	Duracion:</strong>
+										<c:out value="${atraction.getDuration()}"></c:out>
+									</p>
+									<c:if test="${!user.isAdmin() && atraction.enable && user.canAfford(atraction) && user.canAttend(atraction) && atraction.canHost(1) && user.canBuy(atraction.getId())}">
+									
+											<a href="/turismo/attractions/buy.do?id=${atraction.id}"
+												class="btn btn-dark rounded" role="button">Comprar</a>
+										
+									</c:if>
+									<c:if test="${!user.isAdmin() && (!atraction.enable || !user.canAfford(atraction) || !user.canAttend(atraction) || !atraction.canHost(1) || !user.canBuy(atraction.getId()))}">
+									
+											<button class="btn btn-secondary disabled " role="button">No disponible</button> 
+										
+									</c:if>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+
+				</div>
+			</section>
+
+		</c:if>
 	</main>
 	<br>
 	<br>

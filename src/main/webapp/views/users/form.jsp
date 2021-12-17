@@ -35,13 +35,7 @@
 			<c:out value='${user.errors.get("type")}'></c:out>
 		</div>
 	</div>
-<div class="mb-3">
-		<label for="isAdmin" class='col-form-label'>Es administrador: </label>
-		  <input type="checkbox" id="isAdmin" name="isAdmin"></input>
-		
 
-		</div>
-</div>
 <div>
 	<button type="submit" class="btn btn-primary">Guardar</button>
 	<a onclick="window.history.back();" class="btn btn-secondary"
