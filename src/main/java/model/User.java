@@ -15,10 +15,13 @@ public class User {
 	private Boolean admin;
 	private Integer coins;
 	private Double time;
+	private Integer dinero_gastado;
+	private Double tiempo_gastado;
+	
 	private String type;
 	private Map<String, String> errors;
 
-	public User(Integer id, String username, String type, Integer coins, Double time, String password, Boolean admin) {
+	public User(Integer id, String username, String type, Integer coins, Double time, String password, Boolean admin,Integer dinero_gastado,Double tiempo_gastado) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -27,11 +30,40 @@ public class User {
 		this.time = time;
 		this.type = type;
 		this.admin = admin;
+		this.dinero_gastado=dinero_gastado;
+		this.tiempo_gastado=tiempo_gastado;
+		
 	}
 
 	public void addToItinerary(Suggestion suggestion) {
 		this.coins -= suggestion.getCost();
 		this.time -= suggestion.getDuration();
+		this.dinero_gastado+=suggestion.getCost();
+		this.tiempo_gastado+=suggestion.getDuration();
+	}
+
+	public Integer getDinero_gastado() {
+		return dinero_gastado;
+	}
+
+	public void setDinero_gastado(Integer dinero_gastado) {
+		this.dinero_gastado = dinero_gastado;
+	}
+
+	public Double getTiempo_gastado() {
+		return tiempo_gastado;
+	}
+
+	public void setTiempo_gastado(Double tiempo_gastado) {
+		this.tiempo_gastado = tiempo_gastado;
+	}
+
+	public Boolean getAdmin() {
+		return admin;
+	}
+
+	public void setErrors(Map<String, String> errors) {
+		this.errors = errors;
 	}
 
 	public boolean canAfford(Suggestion suggestion) {
@@ -149,7 +181,7 @@ public class User {
 		if (coins <= 0) {
 			errors.put("coins", "Debe ser positivo");
 		}
-		if (time <= 0) {
+		if (time <= 0.0) {
 			errors.put("time", "Debe ser positivo");
 		}
 		if (!type.equals("AVENTURA") && !type.equals("DEGUSTACION") && !type.equals("PAISAJE")) {

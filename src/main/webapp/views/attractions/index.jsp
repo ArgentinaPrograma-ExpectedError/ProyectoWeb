@@ -25,7 +25,7 @@
 
 		<c:if test="${user.isAdmin()}">
 			<div class="mb-3">
-				<a href="/turismo/attraction/create.do" class="btn btn-danger"
+				<a href="/turismo/attractions/create.do" class="btn btn-danger"
 					role="button"> <i class="bi bi-plus-lg"></i> Nueva Atracción
 				</a>
 			</div>
@@ -58,18 +58,18 @@
 							<td><c:out value="${atraction.getCapacity()}"></c:out></td>
 							<td><c:out value="${atraction.getAttractionType()}"></c:out></td>
 
-							<td><a href="/turismo/atractions/edit.do?id=${atraction.id}"
+							<td><a href="/turismo/attractions/edit.do?id=${atraction.id}"
 								class="btn btn-light rounded-0" role="button"><i
 									class="bi bi-pencil-square"></i></a> <a
-								href="/turismo/atractions/delete.do?id=${atraction.id}"
+								href="/turismo/attractions/delete.do?id=${atraction.id}"
 								class="btn btn-danger" role="button"><i class="bi bi-trash"></i></a>
 								<c:choose>
 									<c:when test="${atraction.enable}">
-										<a href="/turismo/atractions/enable.do?id=${atraction.id}"
+										<a href="/turismo/attractions/enable.do?id=${atraction.id}"
 											class="btn btn-outline-secondary" role="button">Deshabilitar</a>
 									</c:when>
 									<c:otherwise>
-										<a href="/turismo/atractions/enable.do?id=${atraction.id}"
+										<a href="/turismo/attractions/enable.do?id=${atraction.id}"
 											class="btn btn-secondary" role="button">Habilitar</a>
 									</c:otherwise>
 								</c:choose></td>

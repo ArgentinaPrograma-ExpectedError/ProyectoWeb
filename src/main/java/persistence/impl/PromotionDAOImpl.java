@@ -30,7 +30,7 @@ public class PromotionDAOImpl implements PromotionDAO {
 	@Override
 	public List<Promotion> findAll() {
 		try {
-			String sql = "SELECT PROMOCIONES.ID, PROMOCIONES.NOMBRE, TIPO_ATRACCION.TIPO, TIPO_PROMOCION.TIPO, PROMOCIONES.DESCRIPCION, PROMOCIONES.DESCUENTO, PROMOCIONES.PRECIO, PROMOCIONES.ESTADO FROM PROMOCIONES\r\n"
+			String sql = "SELECT PROMOCIONES.ID, PROMOCIONES.NOMBRE, TIPO_ATRACCION.TIPO, TIPO_PROMOCION.TIPO, PROMOCIONES.DESCRIPCION, PROMOCIONES.DESCUENTO, PROMOCIONES.PRECIO, PROMOCIONES.ESTADO, PROMOCIONES.URL FROM PROMOCIONES\r\n"
 					+ "JOIN TIPO_PROMOCION\r\n" + "on PROMOCIONES.TIPO_PROMOCION=TIPO_PROMOCION.ID\r\n"
 					+ "JOIN TIPO_ATRACCION\r\n" + "on PROMOCIONES.TIPO_ATRACCIONES=TIPO_ATRACCION.ID";
 			Connection conn = ConnectionProvider.getConnection();
@@ -61,7 +61,7 @@ public class PromotionDAOImpl implements PromotionDAO {
 	@Override
 	public Promotion find(Integer id) {
 		try {
-			String sql = "SELECT PROMOCIONES.ID, PROMOCIONES.NOMBRE, TIPO_ATRACCION.TIPO, TIPO_PROMOCION.TIPO, PROMOCIONES.DESCRIPCION, PROMOCIONES.DESCUENTO, PROMOCIONES.PRECIO, PROMOCIONES.ESTADO FROM PROMOCIONES\r\n"
+			String sql = "SELECT PROMOCIONES.ID, PROMOCIONES.NOMBRE, TIPO_ATRACCION.TIPO, TIPO_PROMOCION.TIPO, PROMOCIONES.DESCRIPCION, PROMOCIONES.DESCUENTO, PROMOCIONES.PRECIO, PROMOCIONES.ESTADO,PROMOCIONES.URL FROM PROMOCIONES\r\n"
 					+ "JOIN TIPO_PROMOCION\r\n" + "on PROMOCIONES.TIPO_PROMOCION=TIPO_PROMOCION.ID\r\n"
 					+ "JOIN TIPO_ATRACCION\r\n" + "on PROMOCIONES.TIPO_ATRACCIONES=TIPO_ATRACCION.ID\r\n"
 					+ "WHERE PROMOCIONES.ID = ?";
@@ -290,7 +290,7 @@ public class PromotionDAOImpl implements PromotionDAO {
 		}
 		return new AbsolutePromotion(resultados.getInt(1), resultados.getString(2), resultados.getString(3),
 				resultados.getString(4), atraccionesPromo, resultados.getString(5), resultados.getBoolean(8),
-				resultados.getInt(7));
+				resultados.getInt(7),resultados.getString(9));
 	}
 
 	private Promotion toAxBPromotion(ResultSet resultados, List<Integer> atracciones_promo) throws SQLException {
@@ -303,7 +303,7 @@ public class PromotionDAOImpl implements PromotionDAO {
 			}
 		}
 		return new AxBPromotion(resultados.getInt(1), resultados.getString(2), resultados.getString(3),
-				resultados.getString(4), atraccionesPromo, resultados.getString(5), resultados.getBoolean(8));
+				resultados.getString(4), atraccionesPromo, resultados.getString(5), resultados.getBoolean(8),resultados.getString(9));
 	}
 
 	private Promotion toPercentagePromotion(ResultSet resultados, List<Integer> atracciones_promo) throws SQLException {
@@ -317,7 +317,7 @@ public class PromotionDAOImpl implements PromotionDAO {
 		}
 		return new PercentagePromotion(resultados.getInt(1), resultados.getString(2), resultados.getString(3),
 				resultados.getString(4), atraccionesPromo, resultados.getString(5), resultados.getBoolean(8),
-				resultados.getInt(6));
+				resultados.getInt(6),resultados.getString(9));
 	}
 
 	private PromotionType toPromotionType(ResultSet resultados) throws SQLException {

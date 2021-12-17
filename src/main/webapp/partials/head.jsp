@@ -2,8 +2,9 @@
 <title>Turismo en la Tierra Media</title>
 
 <link rel="shortcut icon" href="/turismo/assets/favicon.ico">
-
-
+ <link href="/your-path-to-fontawesome/css/fontawesome.css" rel="stylesheet">
+  <link href="/your-path-to-fontawesome/css/brands.css" rel="stylesheet">
+  <link href="/your-path-to-fontawesome/css/solid.css" rel="stylesheet">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"

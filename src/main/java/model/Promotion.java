@@ -15,9 +15,10 @@ public abstract class Promotion implements Suggestion, Comparable<Promotion> {
 	private Double duration;
 	private Integer netCost;
 	private Boolean enable;
+	private String url;
 
 	public Promotion(Integer id, String name, String attractionType, String promotionType, List<Attraction> attractions,
-			String description, Boolean enable) {
+			String description, Boolean enable,String url) {
 		this.id = id;
 		this.name = name;
 		this.attractionType = attractionType;
@@ -27,6 +28,15 @@ public abstract class Promotion implements Suggestion, Comparable<Promotion> {
 		this.enable = enable;
 		this.duration = this.calculateDuration();
 		this.netCost = this.calculateNetCost();
+		this.url=url;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public Integer getId() {

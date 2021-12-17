@@ -11,8 +11,8 @@ public class AxBPromotion extends Promotion {
 	private Map<String, String> errors;
 
 	public AxBPromotion(Integer id, String name, String attractionType, String promotionType, List<Attraction> attractions, String description,
-			Boolean enable) {
-		super(id, name, attractionType, promotionType, attractions, description, enable);
+			Boolean enable,String url) {
+		super(id, name, attractionType, promotionType, attractions, description, enable,url);
 		this.cost = this.calculateCost();
 	}
 	

@@ -14,7 +14,7 @@ public class UserService {
 	}
 
 	public User create(String username, String type, Integer coins, Double time, String password, Boolean admin) {
-		User user = new User(-1,username, type, coins, time,Crypt.hash(password), admin);
+		User user = new User(-1,username, type, coins, time,Crypt.hash(password), admin,0,0.0);
 
 		if (user.isValid()) {
 			UserDAO userDAO = DAOFactory.getUserDAO();
@@ -46,7 +46,7 @@ public class UserService {
 	}
 
 	public void delete(Integer id) {
-		User user = new User(id, null, null, null, null, null,null);
+		User user = new User(id, null, null, null, null, null,null,null,null);
 		UserDAO userDAO = DAOFactory.getUserDAO();
 		userDAO.delete(user);
 	}

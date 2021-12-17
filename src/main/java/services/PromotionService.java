@@ -18,7 +18,7 @@ public class PromotionService {
 	}
 
 	public Promotion create(String promotionType, String name, String attractionType, List<String> atracciones,
-			Integer valor, String description, Boolean state) {
+			Integer valor, String description, Boolean state,String url) {
 
 		List<Attraction> attractions = new LinkedList<Attraction>();
 		for (String s : atracciones) {
@@ -33,14 +33,14 @@ public class PromotionService {
 
 		if (promotionType.equals("ABSOLUTA")) {
 			promotion = new AbsolutePromotion(-1, name, attractionType, promotionType, attractions, description, state,
-					valor);
+					valor,url);
 		}
 		if (promotionType.equals("AXB")) {
-			promotion = new AxBPromotion(-1, name, attractionType, promotionType, attractions, description, state);
+			promotion = new AxBPromotion(-1, name, attractionType, promotionType, attractions, description, state,url);
 		}
 		if (promotionType.equals("PORCENTUAL")) {
 			promotion = new PercentagePromotion(-1, name, attractionType, promotionType, attractions, description,
-					state, valor);
+					state, valor,url);
 		}
 
 		if (promotion.isValid()) {
@@ -71,7 +71,7 @@ public class PromotionService {
 
 	public void delete(Integer id) {
 
-		Promotion promotion = new AbsolutePromotion(id, null, null, null, null, null, null, 0);
+		Promotion promotion = new AbsolutePromotion(id, null, null, null, null, null, null, 0,null);
 
 		PromotionDAO promotionDAO = DAOFactory.getPromotionDAO();
 		promotionDAO.delete(promotion);

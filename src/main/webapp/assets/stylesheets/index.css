@@ -12,9 +12,7 @@ img {
 
 #brand {
    font-size: 5em;
-   cursor: pointer;
-   background: rgb(239,237,237);
-background: linear-gradient(0deg, rgba(239,237,237,0.6113841881912746) 0%, rgba(239,177,4,1) 57%, rgba(108,82,9,1) 95%);
+   background-image:url("../img/back10.jpg") ;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-align: center;

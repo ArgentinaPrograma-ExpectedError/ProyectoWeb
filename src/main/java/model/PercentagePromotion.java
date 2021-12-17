@@ -11,8 +11,8 @@ public class PercentagePromotion extends Promotion {
 	private Map<String, String> errors;
 
 	public PercentagePromotion(Integer id, String name, String attractionType, String promotionType,
-			List<Attraction> attractions, String description, Boolean enable, Integer discount) {
-		super(id, name, attractionType, promotionType, attractions, description, enable);
+			List<Attraction> attractions, String description, Boolean enable, Integer discount,String url) {
+		super(id, name, attractionType, promotionType, attractions, description, enable,url);
 		this.setDiscount(discount);
 		this.cost = this.calculateCost();
 	}

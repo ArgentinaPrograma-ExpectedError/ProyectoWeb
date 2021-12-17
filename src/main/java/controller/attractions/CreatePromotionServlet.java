@@ -49,8 +49,10 @@ public class CreatePromotionServlet extends HttpServlet {
 		String description = req.getParameter("description");
 		Boolean eneable = Boolean.parseBoolean(req.getParameter("eneable"));
 
+		String url= req.getParameter("url");
+		
 		Promotion promotion = promotionService.create(promotionType, name, attractionType, attractions, valor,
-				description, eneable);
+				description, eneable,url);
 		if (promotion.isValid()) {
 			resp.sendRedirect("/turismo/promotions/index.do");
 		} else {

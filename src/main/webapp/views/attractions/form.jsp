@@ -37,15 +37,15 @@
 		</div>
 	</div>
 
-</div>
+
 	
 	<div class="mb-3">
-		<label for="type"
-			class='col-form-label ${attraction.errors.get("type") != null ? "is-invalid" : "" }'>Tipo:</label>
-		<input class="form-control" type="text" id="type" name="type" required
-			value="${attraction.type}"></input>
+		<label for="attractionType"
+			class='col-form-label ${attraction.errors.get("attractionType") != null ? "is-invalid" : "" }'>Tipo:</label>
+		<input class="form-control" type="text" id="attractionType" name="attractionType" required
+			value="${attraction.attractionType}"></input>
 		<div class="invalid-feedback">
-			<c:out value='${attraction.errors.get("type")}'></c:out>
+			<c:out value='${attraction.errors.get("attractionType")}'></c:out>
 		</div>
 	</div> 
 
@@ -57,7 +57,7 @@
 			type="text" class="form-control" id="description" name="description"
 			required value="${attraction.description}">
 	</div>
-
+</div>
 <div>
 	<button type="submit" class="btn btn-primary">Guardar</button>
 	<a onclick="window.history.back();" class="btn btn-secondary"

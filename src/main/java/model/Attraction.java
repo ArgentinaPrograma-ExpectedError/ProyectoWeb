@@ -20,9 +20,10 @@ public class Attraction implements Suggestion, Comparable<Attraction> {
 	private String description;
 	private Boolean enable;
 	private Map<String, String> errors;
+	private String url;
 
 	public Attraction(Integer id, String name, Integer cost, Double duration, Integer capacity, String attractionType,
-			String description, Boolean eneable) {
+			String description, Boolean eneable,String url) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -32,11 +33,21 @@ public class Attraction implements Suggestion, Comparable<Attraction> {
 		this.attractionType = attractionType;
 		this.description = description;
 		this.enable = eneable;
+		this.url=url;
+		
 	}
 
 	public boolean isValid() {
 		validate();
 		return errors.isEmpty();
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public void validate() {
@@ -135,10 +146,12 @@ public class Attraction implements Suggestion, Comparable<Attraction> {
 		return enable;
 	}
 
+	
+
 	@Override
 	public String toString() {
 		return "Attraction [id=" + id + ", name=" + name + ", cost=" + cost + ", duration=" + duration + ", capacity="
-				+ capacity + "]";
+				+ capacity + ", attractionType=" + attractionType + ", description=" + description + "]";
 	}
 
 	public boolean canHost(int i) {

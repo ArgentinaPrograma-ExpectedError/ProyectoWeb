@@ -1,3 +1,4 @@
+<%@page import="model.Suggestion"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
@@ -24,26 +25,26 @@
 	<br>
 
 	<main class="container" style="flex: center">
-		
-			<ul class="lista-articulos">
-			
-				<c:forEach items="${attractions}" var="atraction">
 
-					<li>
-			 			<article>
-							<tr>
-								<td><c:out value="${atraction.getId()}"></c:out></td>
-								<td><c:out value="${atraction.getName()}"></c:out></td>
-								<td><c:out value="${atraction.description}"></c:out></td>
-								<td><c:out value="${atraction.getCost()}"></c:out></td>
-								<td><c:out value="${atraction.getDuration()}"></c:out></td>
-								<td><c:out value="${atraction.getCapacity()}"></c:out></td>
-								<td><c:out value="${atraction.getAttractionType()}"></c:out></td>
-							</tr>
-						</article>
-					</li>
-				</c:forEach>
-				</ul>
+		<ul class="lista-articulos">
+
+			<c:forEach items="${suggestions}" var="suggestion">
+
+				<li>
+					<article>
+						<a href=""><img src="${suggestion.getUrl()}"></a>
+						<h3>
+							<c:out value="${suggestion.getName()}"></c:out>
+						</h3>
+						<p>
+							<c:out value="${suggestion.description}"></c:out>
+						</p>
+
+
+					</article>
+				</li>
+			</c:forEach>
+		</ul>
 	</main>
 
 	<footer>
@@ -67,7 +68,7 @@
 
 				</div>
 			</div>
-		<!-- ----------- iconos----------------  -->
+			<!-- ----------- iconos----------------  -->
 
 			<div>
 				<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"

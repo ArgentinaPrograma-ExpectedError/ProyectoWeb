@@ -34,6 +34,7 @@ public class BuyAttractionService {
 			user.addToItinerary(attraction);
 		    
 			userDAO.agregarAItinerario(user,attraction);	
+			System.out.println(user.getDinero_gastado());
 		    userDAO.update(user);
 		    
 		    attraction.host(1);

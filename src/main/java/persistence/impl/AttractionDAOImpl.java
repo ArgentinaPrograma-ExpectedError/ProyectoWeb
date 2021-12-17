@@ -20,7 +20,7 @@ public class AttractionDAOImpl implements AttractionDAO {
 	@Override
 	public List<Attraction> findAll() {
 		try {
-			String sql = "SELECT ATRACCIONES.ID, ATRACCIONES.NOMBRE, ATRACCIONES.COSTO, ATRACCIONES.DURACION, ATRACCIONES.CUPO, TIPO_ATRACCION.TIPO, ATRACCIONES.DESCRIPCION, ATRACCIONES.ESTADO FROM ATRACCIONES\r\n"
+			String sql = "SELECT ATRACCIONES.ID, ATRACCIONES.NOMBRE, ATRACCIONES.COSTO, ATRACCIONES.DURACION, ATRACCIONES.CUPO, TIPO_ATRACCION.TIPO, ATRACCIONES.DESCRIPCION, ATRACCIONES.ESTADO, ATRACCIONES.URL FROM ATRACCIONES\r\n"
 					+ "JOIN TIPO_ATRACCION\r\n" + "ON TIPO_ATRACCION.ID = ATRACCIONES.TIPO;";
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -41,7 +41,7 @@ public class AttractionDAOImpl implements AttractionDAO {
 	@Override
 	public Attraction find(Integer id) {
 		try {
-			String sql = "SELECT ATRACCIONES.ID, ATRACCIONES.NOMBRE, ATRACCIONES.COSTO, ATRACCIONES.DURACION, ATRACCIONES.CUPO, TIPO_ATRACCION.TIPO, ATRACCIONES.DESCRIPCION, ATRACCIONES.ESTADO FROM ATRACCIONES\r\n"
+			String sql = "SELECT ATRACCIONES.ID, ATRACCIONES.NOMBRE, ATRACCIONES.COSTO, ATRACCIONES.DURACION, ATRACCIONES.CUPO, TIPO_ATRACCION.TIPO, ATRACCIONES.DESCRIPCION, ATRACCIONES.ESTADO, ATRACCIONES.URL FROM ATRACCIONES\r\n"
 					+ "JOIN TIPO_ATRACCION\r\n" + "ON TIPO_ATRACCION.ID = ATRACCIONES.TIPO WHERE ATRACCIONES.ID = ?";
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -189,7 +189,7 @@ public class AttractionDAOImpl implements AttractionDAO {
 	private Attraction toAttraction(ResultSet attractionRegister) throws SQLException {
 		return new Attraction(attractionRegister.getInt(1), attractionRegister.getString(2),
 				attractionRegister.getInt(3), attractionRegister.getDouble(4), attractionRegister.getInt(5),
-				attractionRegister.getString(6), attractionRegister.getString(7), attractionRegister.getBoolean(8));
+				attractionRegister.getString(6), attractionRegister.getString(7), attractionRegister.getBoolean(8), attractionRegister.getString(9));
 	}
 
 	private AttractionType toAttractionType(ResultSet resultados) throws SQLException {

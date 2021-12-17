@@ -55,7 +55,7 @@ public class UserDAOImpl implements UserDAO {
 
 	public int update(User user) {
 		try {
-			String sql = "UPDATE USUARIOS SET NOMBRE = ?, TIPO_PREFERIDO = ?,DINERO_DISPONIBLE = ?, TIEMPO_DISPONIBLE = ?,ADMIN = ? WHERE ID= ?";
+			String sql = "UPDATE USUARIOS SET NOMBRE = ?, TIPO_PREFERIDO = ?,DINERO_DISPONIBLE = ?, TIEMPO_DISPONIBLE = ?,ADMIN = ?,DINERO_GASTADO = ?,TIEMPO_GASTADO = ? WHERE ID= ?";
 			Connection conn = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -76,8 +76,10 @@ public class UserDAOImpl implements UserDAO {
 			statement.setDouble(4, user.getTime());
 
 			statement.setBoolean(5, user.isAdmin());
-			statement.setInt(6, user.getId());
-
+			statement.setInt(8, user.getId());
+			
+			statement.setInt(6, user.getDinero_gastado());
+			statement.setDouble(7, user.getTiempo_gastado());
 			int rows = statement.executeUpdate();
 
 			return rows;
@@ -103,7 +105,7 @@ public class UserDAOImpl implements UserDAO {
 
 	public User findByUsername(String username) {
 		try {
-			String sql = "SELECT ID, NOMBRE, TIPO_PREFERIDO, DINERO_DISPONIBLE, TIEMPO_DISPONIBLE, PASSWORD ,ADMIN FROM USUARIOS WHERE NOMBRE = ?";
+			String sql = "SELECT ID, NOMBRE, TIPO_PREFERIDO, DINERO_DISPONIBLE, TIEMPO_DISPONIBLE, PASSWORD ,ADMIN,DINERO_GASTADO,TIEMPO_GASTADO FROM USUARIOS WHERE NOMBRE = ?";
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setString(1, username);
@@ -123,7 +125,7 @@ public class UserDAOImpl implements UserDAO {
 
 	public User find(Integer id) {
 		try {
-			String sql = "SELECT  usuarios.id,usuarios.NOMBRE, tipo_atraccion.tipo , usuarios.DINERO_DISPONIBLE, usuarios.TIEMPO_DISPONIBLE, usuarios.password ,usuarios.ADMIN from usuarios\r\n"
+			String sql = "SELECT  usuarios.id,usuarios.NOMBRE, tipo_atraccion.tipo , usuarios.DINERO_DISPONIBLE, usuarios.TIEMPO_DISPONIBLE, usuarios.password ,usuarios.ADMIN, usuarios.DINERO_GASTADO, usuarios.TIEMPO_GASTADO from usuarios\r\n"
 					+ "JOIN tipo_atraccion on usuarios.tipo_preferido = tipo_atraccion.id \r\n"
 					+ "WHERE usuarios.id= ?";
 
@@ -162,7 +164,7 @@ public class UserDAOImpl implements UserDAO {
 
 	public List<User> findAll() {
 		try {
-			String sql = "SELECT USUARIOS.ID, USUARIOS.NOMBRE,tipo_atraccion.tipo,USUARIOS.dinero_disponible, USUARIOS.tiempo_disponible ,	USUARIOS.password, usuarios.admin FROM usuarios  JOIN tipo_atraccion on usuarios.tipo_preferido=tipo_atraccion.id";
+			String sql = "SELECT USUARIOS.ID, USUARIOS.NOMBRE,tipo_atraccion.tipo,USUARIOS.dinero_disponible, USUARIOS.tiempo_disponible ,	USUARIOS.password, usuarios.admin, usuarios.DINERO_GASTADO, usuarios.TIEMPO_GASTADO FROM usuarios  JOIN tipo_atraccion on usuarios.tipo_preferido=tipo_atraccion.id";
 			;
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -233,6 +235,40 @@ public class UserDAOImpl implements UserDAO {
 		return array;
 	}
 
+	public static List<Attraction> cargarAtraccionesItinerarioStatic(User u) {
+		AttractionDAO attractionDAO = DAOFactory.getAttractionDAO();
+		List<Attraction> array = new LinkedList<Attraction>();
+		List<Attraction> todas = attractionDAO.findAll();
+		List<String> atracciones = cargarAtraccionesCompradasStatic(u);
+
+		for (String string : atracciones) {
+			for (Attraction a : todas) {
+				if (string.equals(a.getName())) {
+					array.add(attractionDAO.find(a.getId()));
+				}
+
+			}
+		}
+		return array;
+	}
+	public static List<String> cargarAtraccionesCompradasStatic(User u) {
+		try {
+			String sql = "SELECT atracciones.nombre FROM atracciones JOIN itinerarios on itinerarios.id_atraccion=atracciones.id JOIN usuarios on itinerarios.id_usuario=usuarios.id WHERE usuarios.id = ?";
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, u.getId());
+			ResultSet resultados = statement.executeQuery();
+
+			List<String> atraccionesCompradas = new ArrayList<String>();
+			while (resultados.next()) {
+				atraccionesCompradas.add(resultados.getString(1));
+			}
+
+			return atraccionesCompradas;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
 	public List<String> cargarAtraccionesCompradas(User u) {
 		try {
 			String sql = "SELECT atracciones.nombre FROM atracciones JOIN itinerarios on itinerarios.id_atraccion=atracciones.id JOIN usuarios on itinerarios.id_usuario=usuarios.id WHERE usuarios.id = ?";
@@ -255,7 +291,7 @@ public class UserDAOImpl implements UserDAO {
 	private User toUser(ResultSet userRegister) throws SQLException {
 		return new User(userRegister.getInt(1), userRegister.getString(2), userRegister.getString(3),
 				userRegister.getInt(4), userRegister.getDouble(5), userRegister.getString(6),
-				userRegister.getBoolean(7));
+				userRegister.getBoolean(7),userRegister.getInt(8),userRegister.getDouble(9));
 	}
 
 	@Override
